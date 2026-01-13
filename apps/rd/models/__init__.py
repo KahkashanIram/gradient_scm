@@ -1,0 +1,1 @@
+from .new_product_request import NewProductRequest

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Create Sales Order{% endblock %}
+
+{% block content %}
+<div class="page">
+    <h1>Create Sales Order</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grid">
+            <div>
+                <label>Customer Name</label>
+                {{ form.customer_name }}
+            </div>
+            <div>
+                <label>Product Title</label>
+                {{ form.product_title }}
+            </div>
+
+            <div>
+                <label>Product ID</label>
+                {{ form.product_id }}
+            </div>
+
+            <div>
+                <label>Quantity</label>
+                {{ form.quantity }}
+            </div>
+
+            <div>
+                <label>Requested Date</label>
+                {{ form.requested_date }}
+            </div>
+
+            <div>
+                <label>Expected Delivery Date</label>
+                {{ form.expected_delivery_date }}
+            </div>
+
+            <div style="grid-column: 1 / -1;">
+                <label>Product Description</label>
+                {{ form.product_description }}
+            </div>
+
+            <div class="checkbox">
+                {{ form.is_new_product }}
+                <label>New Product</label>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit">Save Order</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

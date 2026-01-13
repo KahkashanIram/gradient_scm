@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.order_code }}{% endblock %}
+
+{% block content %}
+<div class="page">
+
+    <h1>Sales Order {{ order.order_code }}</h1>
+
+    <div style="margin-bottom:16px; color:#606060;">
+        Status: <strong>{{ order.status }}</strong>
+    </div>
+
+    <!-- Phase D3: Submit to Planning -->
+    {% if order.status == "DRAFT" %}
+    <form method="post" action="{% url 'sales:order_submit' order.id %}">
+        {% csrf_token %}
+        <div style="margin-bottom:32px;">
+            <button type="submit">
+                Submit to Planning
+            </button>
+        </div>
+    </form>
+    {% endif %}
+
+    <!-- Sales Information -->
+    <h3>Sales Information</h3>
+
+    <table style="width:100%; border-collapse:collapse; margin-bottom:32px;">
+        <tr>
+            <td>Customer</td>
+            <td>{{ order.customer_name }}</td>
+        </tr>
+        <tr>
+            <td>Product Title</td>
+            <td>{{ order.product_title|default:"—" }}</td>
+        </tr>
+        <tr>
+            <td>Product ID</td>
+            <td>{{ order.product_id|default:"—" }}</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td>{{ order.quantity }}</td>
+        </tr>
+        <tr>
+            <td>Requested Date</td>
+            <td>{{ order.requested_date }}</td>
+        </tr>
+        <tr>
+            <td>Expected Delivery</td>
+            <td>{{ order.expected_delivery_date }}</td>
+        </tr>
+        <tr>
+            <td>New Product</td>
+            <td>{{ order.is_new_product|yesno:"Yes,No" }}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{ order.product_description }}</td>
+        </tr>
+    </table>
+
+    <!-- Planning Mirror -->
+    <h3>Planning Status</h3>
+
+    <table style="width:100%; border-collapse:collapse;">
+        <tr>
+            <td>Status</td>
+            <td>{{ order.planning_status|default:"Pending" }}</td>
+        </tr>
+        <tr>
+            <td>Decision Reason</td>
+            <td>{{ order.planning_decision_reason|default:"—" }}</td>
+        </tr>
+        <tr>
+            <td>Decided At</td>
+            <td>{{ order.planning_decided_at|default:"—" }}</td>
+        </tr>
+    </table>
+
+</div>
+{% endblock %}
